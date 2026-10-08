@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Auto Scroll Loop – Plain UI</title>
+  <style>
+    /* ---------- plain, no gradients, no shadows, no fluff ---------- */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+      background: #f5f5f5;
+      color: #1a1a1a;
+      line-height: 1.6;
+      padding: 30px 20px 60px 20px;
+    }
+
+    .container {
+      max-width: 780px;
+      margin: 0 auto;
+    }
+
+    /* ---------- header – simple solid ---------- */
+    .top-bar {
+      background: #ffffff;
+      border-bottom: 1px solid #ccc;
+      padding: 16px 20px;
+      margin-bottom: 30px;
+      border-radius: 0;
+    }
+
+    .top-bar h1 {
+      font-size: 1.4rem;
+      font-weight: 600;
+      color: #111;
+      letter-spacing: -0.02em;
+    }
+
+    .top-bar p {
+      font-size: 0.9rem;
+      color: #555;
+      margin-top: 4px;
+    }
+
+    /* ---------- article cards – plain white boxes ---------- */
+    .article {
+      background: #ffffff;
+      border: 1px solid #d0d0d0;
+      border-radius: 6px;
+      padding: 24px;
+      margin-bottom: 28px;
+    }
+
+    .article-meta {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.8rem;
+      color: #666;
+      font-family: 'Courier New', monospace;
+      margin-bottom: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
+    }
+
+    .article h2 {
+      font-size: 1.5rem;
+      font-weight: 650;
+      margin-bottom: 12px;
+      color: #0a0a0a;
+      line-height: 1.3;
+    }
+
+    .article p {
+      margin-bottom: 16px;
+      color: #2a2a2a;
+      font-size: 1rem;
+    }
+
+    .article p:last-child {
+      margin-bottom: 0;
+    }
+
+    .code-block {
+      background: #f0f0f0;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      padding: 14px 18px;
+      font-family: 'Courier New', monospace;
+      font-size: 0.85rem;
+      margin: 18px 0;
+      color: #222;
+      overflow-x: auto;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+
+    .tag {
+      display: inline-block;
+      background: #e8e8e8;
+      color: #333;
+      padding: 3px 10px;
+      border-radius: 12px;
+      font-size: 0.75rem;
+      margin-right: 6px;
+      margin-top: 8px;
+      font-family: monospace;
+    }
+
+    /* ---------- simple footer note ---------- */
+    .footer-note {
+      text-align: center;
+      font-size: 0.85rem;
+      color: #777;
+      margin-top: 20px;
+      padding: 20px 0 10px;
+      border-top: 1px solid #ccc;
+    }
+
+    /* ---------- no controls, no extra UI ---------- */
+    /* just the content scrolling by itself */
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <!-- simple header -->
+    <div class="top-bar">
+      <h1>Auto Scroll Demo</h1>
+      <p>Page scrolls down automatically, then loops back to top.</p>
+    </div>
+
+    <!-- dummy article 1 -->
+    <article class="article">
+      <div class="article-meta">
+        <span>Chapter 01 · Dummy</span>
+        <span>5 min read</span>
+      </div>
+      <h2>This Page Scrolls All By Itself</h2>
+      <p>No buttons, no sliders, no controls. Just plain text that moves down the screen at a steady pace. When it reaches the bottom, it starts over from the top. That's the whole idea.</p>
+      <p>Everything here is placeholder content. The design uses simple colors: white cards, light gray background, and dark text. No gradients, no glass effects, no AI-generated look.</p>
+      <div class="code-block">
+        // simple loop<br>
+        setInterval(() => {<br>
+        &nbsp;&nbsp;window.scrollBy(0, 1);<br>
+        &nbsp;&nbsp;if (atBottom) window.scrollTo(0, 0);<br>
+        }, 16);
+      </div>
+      <p>You don't need to interact with anything. Just watch it scroll. The movement is smooth and continuous.</p>
+      <span class="tag">#autoscroll</span>
+      <span class="tag">#loop</span>
+      <span class="tag">#plain</span>
+    </article>
+
+    <!-- dummy article 2 -->
+    <article class="article">
+      <div class="article-meta">
+        <span>Chapter 02 · Example</span>
+        <span>4 min read</span>
+      </div>
+      <h2>More Dummy Text for the Loop</h2>
+      <p>This second block of content exists only to make the page long enough so the auto-scroll is noticeable. When the bottom of the page is reached, the script jumps back to the top and continues scrolling down again.</p>
+      <p>There is no pause button, no speed control, no direction toggle. The page just scrolls in a loop forever, or until you close the tab.</p>
+      <span class="tag">#placeholder</span>
+      <span class="tag">#dummycontent</span>
+    </article>
+
+    <!-- dummy article 3 -->
+    <article class="article">
+      <div class="article-meta">
+        <span>Chapter 03 · Notes</span>
+        <span>6 min read</span>
+      </div>
+      <h2>How the Loop Works</h2>
+      <p>The script uses a timer to move the window down by a few pixels every few milliseconds. Once the window has scrolled past the bottom of the document, it instantly resets to the top and starts scrolling down again.</p>
+      <p>Because there are no controls, the user cannot change the speed or stop the scroll. That's intentional for this demo: it's a pure auto-scroll loop with a very simple UI.</p>
+      <div class="code-block">
+        // pseudo-code<br>
+        every 16ms:<br>
+        &nbsp;&nbsp;scroll down by 1px<br>
+        &nbsp;&nbsp;if scrollY >= maxScroll:<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;scroll to top
+      </div>
+      <span class="tag">#loop</span>
+      <span class="tag">#technical</span>
+    </article>
+
+    <!-- dummy article 4 -->
+    <article class="article">
+      <div class="article-meta">
+        <span>Chapter 04 · More</span>
+        <span>3 min read</span>
+      </div>
+      <h2>Filler Content to Extend the Page</h2>
+      <p>To make the auto-scroll obvious, the page needs to be taller than the viewport. This article adds more height. The text is meaningless but readable, which is fine for a demo.</p>
+      <p>No interactivity is required. Just let it scroll. When it hits the bottom, it loops back to the top automatically. You can watch it repeat as many times as you like.</p>
+      <span class="tag">#filler</span>
+      <span class="tag">#demo</span>
+    </article>
+
+    <!-- dummy article 5 -->
+    <article class="article">
+      <div class="article-meta">
+        <span>Chapter 05 · Final</span>
+        <span>2 min read</span>
+      </div>
+      <h2>Last Block of Dummy Text</h2>
+      <p>This is the final article in the loop. After this section ends, the page will scroll back to the top and start again. There's nothing else to configure or adjust.</p>
+      <p>The design remains simple: plain cards, plain text, plain borders. No fancy UI elements. Just a page that scrolls itself in an endless cycle.</p>
+      <span class="tag">#end</span>
+      <span class="tag">#loop</span>
+    </article>
+
+    <!-- tiny footer note (still no controls) -->
+    <div class="footer-note">
+      auto scroll loop · no controls · plain ui
+    </div>
+  </div>
+
+  <script>
+    (function() {
+      // Config
+      const SCROLL_SPEED = 1.2;        // pixels per tick
+      const TICK_INTERVAL = 16;        // ~60fps (16ms)
+      const BOTTOM_THRESHOLD = 2;      // pixels from bottom to trigger reset
+
+      let scrollInterval = null;
+
+      // Helper: get max scrollable Y
+      function getMaxScroll() {
+        return Math.max(
+          0,
+          document.documentElement.scrollHeight - window.innerHeight
+        );
+      }
+
+      // Scroll down a little, loop if at bottom
+      function step() {
+        const currentY = window.scrollY;
+        const maxY = getMaxScroll();
+
+        // If we're at or near the bottom, jump to top
+        if (currentY >= maxY - BOTTOM_THRESHOLD) {
+          window.scrollTo(0, 0);
+        } else {
+          // Otherwise scroll down by a small amount
+          window.scrollBy(0, SCROLL_SPEED);
+        }
+      }
+
+      // Start the auto-scroll loop on mount
+      function startAutoScroll() {
+        if (scrollInterval) clearInterval(scrollInterval);
+        scrollInterval = setInterval(step, TICK_INTERVAL);
+      }
+
+      // Kick off when the page loads
+      window.addEventListener('load', startAutoScroll);
+
+      // Also handle case where load already fired (script placed at end)
+      if (document.readyState === 'complete') {
+        startAutoScroll();
+      } else {
+        // fallback if load hasn't fired yet
+        document.addEventListener('DOMContentLoaded', startAutoScroll);
+      }
+
+      // Optional: clean up interval if page is unloaded (good practice)
+      window.addEventListener('beforeunload', function() {
+        if (scrollInterval) clearInterval(scrollInterval);
+      });
+    })();
+  </script>
+</body>
+</html>
