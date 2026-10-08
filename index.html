@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Auto Scroll Loop + Video Modal (15s)</title>
+  <title>Auto Scroll Loop + Video Modal (20s)</title>
   <style>
     /* =========================================================
        RESET & BASE
@@ -137,8 +137,8 @@
     /* =========================================================
        VIDEO MODAL
        - Overlay covers full screen with dark semi-transparent bg
-       - Content is wide but not full width on desktop
-       - Responsive on mobile: takes almost full width
+       - Content is smaller on desktop (max-width: 520px)
+       - Even smaller on mobile (see media query below)
        ========================================================= */
     .modal-overlay {
       position: fixed;
@@ -156,7 +156,7 @@
 
     .modal-content {
       width: 100%;
-      max-width: 760px;          /* wide, but not too wide */
+      max-width: 520px;          /* desktop size */
       background: #ffffff;
       border: 1px solid #444;
       border-radius: 6px;
@@ -193,6 +193,7 @@
 
     /* =========================================================
        MOBILE RESPONSIVE TWEAKS
+       - Modal is reduced further on mobile screens
        ========================================================= */
     @media (max-width: 480px) {
       body {
@@ -217,21 +218,21 @@
       }
 
       .modal-overlay {
-        padding: 10px;
+        padding: 24px 20px;
       }
 
       .modal-content {
-        max-width: 100%;
+        max-width: 88%;            /* smaller modal on mobile */
       }
 
       .modal-footer {
-        font-size: 0.72rem;
+        font-size: 0.7rem;
         padding: 8px 10px;
       }
     }
 
     /* =========================================================
-       HIDE MODAL (used by JS after 15 seconds)
+       HIDE MODAL (used by JS after 20 seconds)
        ========================================================= */
     .modal-hidden {
       display: none !important;
@@ -244,7 +245,7 @@
     <!-- ============ HEADER ============ -->
     <div class="top-bar">
       <h1>Auto Scroll Demo + Video</h1>
-      <p>Page scrolls automatically. Video plays for 15 seconds, then closes. Works on mobile too.</p>
+      <p>Page scrolls automatically. Video plays for 20 seconds, then closes. Works on mobile too.</p>
     </div>
 
     <!-- ============ DUMMY ARTICLE 1 ============ -->
@@ -329,14 +330,14 @@
     </article>
 
     <div class="footer-note">
-      auto scroll loop · video modal closes after 15 seconds
+      auto scroll loop · video modal closes after 20 seconds
     </div>
   </div>
 
   <!-- =========================================================
        VIDEO MODAL
        - Autoplays muted (required for autoplay on most browsers)
-       - Closes automatically after 15 seconds
+       - Closes automatically after 20 seconds
        - Works on mobile and desktop (no ESC needed)
        ========================================================= -->
   <div id="videoModal" class="modal-overlay">
@@ -357,7 +358,7 @@
         </iframe>
       </div>
       <div class="modal-footer">
-        Auto‑playing video (muted) · closes in <span id="countdown">15</span>s
+        Auto‑playing video (muted) · closes in <span id="countdown">20</span>s
       </div>
     </div>
   </div>
@@ -418,10 +419,10 @@
          2. VIDEO MODAL BEHAVIOUR
          - Modal is visible on page load
          - Video autoplays (muted)
-         - Modal closes automatically after 15 seconds
+         - Modal closes automatically after 20 seconds
          - No ESC key handling
          ========================================================= */
-      const MODAL_DURATION = 15;       // seconds before auto-close
+      const MODAL_DURATION = 30;       // seconds before auto-close
       const modal = document.getElementById('videoModal');
       const videoFrame = document.getElementById('videoFrame');
       const countdownEl = document.getElementById('countdown');
@@ -484,7 +485,7 @@
         if (modal) {
           modal.classList.remove('modal-hidden');
         }
-        // Start the 15-second countdown
+        // Start the 20-second countdown
         startModalTimer();
       });
 
@@ -508,6 +509,3 @@
   </script>
 </body>
 </html>
-
-
-
