@@ -3,13 +3,19 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Auto Scroll Loop – Plain UI</title>
+  <title>Auto Scroll Loop + Video Modal (15s)</title>
   <style>
-    /* ---------- plain, no gradients, no shadows, no fluff ---------- */
+    /* =========================================================
+       RESET & BASE
+       ========================================================= */
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
+    }
+
+    html {
+      -webkit-text-size-adjust: 100%;
     }
 
     body {
@@ -17,58 +23,66 @@
       background: #f5f5f5;
       color: #1a1a1a;
       line-height: 1.6;
-      padding: 30px 20px 60px 20px;
+      padding: 20px 14px 60px 14px;
     }
 
+    /* =========================================================
+       CONTAINER (content width)
+       ========================================================= */
     .container {
       max-width: 780px;
       margin: 0 auto;
     }
 
-    /* ---------- header – simple solid ---------- */
+    /* =========================================================
+       HEADER
+       ========================================================= */
     .top-bar {
       background: #ffffff;
       border-bottom: 1px solid #ccc;
-      padding: 16px 20px;
-      margin-bottom: 30px;
-      border-radius: 0;
+      padding: 14px 16px;
+      margin-bottom: 24px;
     }
 
     .top-bar h1 {
-      font-size: 1.4rem;
+      font-size: 1.25rem;
       font-weight: 600;
       color: #111;
       letter-spacing: -0.02em;
     }
 
     .top-bar p {
-      font-size: 0.9rem;
+      font-size: 0.85rem;
       color: #555;
       margin-top: 4px;
     }
 
-    /* ---------- article cards – plain white boxes ---------- */
+    /* =========================================================
+       ARTICLE CARDS
+       ========================================================= */
     .article {
       background: #ffffff;
       border: 1px solid #d0d0d0;
       border-radius: 6px;
-      padding: 24px;
-      margin-bottom: 28px;
+      padding: 20px;
+      margin-bottom: 24px;
     }
 
     .article-meta {
       display: flex;
       justify-content: space-between;
-      font-size: 0.8rem;
+      font-size: 0.75rem;
       color: #666;
       font-family: 'Courier New', monospace;
-      margin-bottom: 12px;
+      margin-bottom: 10px;
       text-transform: uppercase;
       letter-spacing: 0.02em;
+      flex-wrap: wrap;
+      gap: 6px;
     }
 
     .article h2 {
-      font-size: 1.5rem;
+      font-size: 1.3rem;
       font-weight: 650;
       margin-bottom: 12px;
       color: #0a0a0a;
@@ -76,9 +90,9 @@
     }
 
     .article p {
-      margin-bottom: 16px;
+      margin-bottom: 14px;
       color: #2a2a2a;
-      font-size: 1rem;
+      font-size: 0.95rem;
     }
 
     .article p:last-child {
@@ -89,10 +103,10 @@
       background: #f0f0f0;
       border: 1px solid #ccc;
       border-radius: 4px;
-      padding: 14px 18px;
+      padding: 12px 14px;
       font-family: 'Courier New', monospace;
-      font-size: 0.85rem;
-      margin: 18px 0;
+      font-size: 0.8rem;
+      margin: 16px 0;
       color: #222;
       overflow-x: auto;
       white-space: pre-wrap;
@@ -105,36 +119,135 @@
       color: #333;
       padding: 3px 10px;
       border-radius: 12px;
-      font-size: 0.75rem;
+      font-size: 0.7rem;
       margin-right: 6px;
       margin-top: 8px;
       font-family: monospace;
     }
 
-    /* ---------- simple footer note ---------- */
     .footer-note {
       text-align: center;
-      font-size: 0.85rem;
+      font-size: 0.8rem;
       color: #777;
       margin-top: 20px;
       padding: 20px 0 10px;
       border-top: 1px solid #ccc;
     }
 
-    /* ---------- no controls, no extra UI ---------- */
-    /* just the content scrolling by itself */
+    /* =========================================================
+       VIDEO MODAL
+       - Overlay covers full screen with dark semi-transparent bg
+       - Content is wide but not full width on desktop
+       - Responsive on mobile: takes almost full width
+       ========================================================= */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.8);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 2000;
+      padding: 16px;
+    }
+
+    .modal-content {
+      width: 100%;
+      max-width: 760px;          /* wide, but not too wide */
+      background: #ffffff;
+      border: 1px solid #444;
+      border-radius: 6px;
+      overflow: hidden;
+    }
+
+    /* 16:9 video wrapper */
+    .video-wrapper {
+      position: relative;
+      width: 100%;
+      padding-bottom: 56.25%;    /* 16:9 aspect ratio */
+      background: #000;
+    }
+
+    .video-wrapper iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: 0;
+      display: block;
+    }
+
+    .modal-footer {
+      padding: 10px 14px;
+      background: #f0f0f0;
+      border-top: 1px solid #ccc;
+      font-size: 0.8rem;
+      color: #444;
+      text-align: center;
+      font-family: monospace;
+    }
+
+    /* =========================================================
+       MOBILE RESPONSIVE TWEAKS
+       ========================================================= */
+    @media (max-width: 480px) {
+      body {
+        padding: 14px 10px 50px 10px;
+      }
+
+      .top-bar h1 {
+        font-size: 1.15rem;
+      }
+
+      .article {
+        padding: 16px;
+        margin-bottom: 18px;
+      }
+
+      .article h2 {
+        font-size: 1.15rem;
+      }
+
+      .article p {
+        font-size: 0.9rem;
+      }
+
+      .modal-overlay {
+        padding: 10px;
+      }
+
+      .modal-content {
+        max-width: 100%;
+      }
+
+      .modal-footer {
+        font-size: 0.72rem;
+        padding: 8px 10px;
+      }
+    }
+
+    /* =========================================================
+       HIDE MODAL (used by JS after 15 seconds)
+       ========================================================= */
+    .modal-hidden {
+      display: none !important;
+    }
   </style>
 </head>
 <body>
 
   <div class="container">
-    <!-- simple header -->
+    <!-- ============ HEADER ============ -->
     <div class="top-bar">
-      <h1>Auto Scroll Demo</h1>
-      <p>Page scrolls down automatically, then loops back to top.</p>
+      <h1>Auto Scroll Demo + Video</h1>
+      <p>Page scrolls automatically. Video plays for 15 seconds, then closes. Works on mobile too.</p>
     </div>
 
-    <!-- dummy article 1 -->
+    <!-- ============ DUMMY ARTICLE 1 ============ -->
     <article class="article">
       <div class="article-meta">
         <span>Chapter 01 · Dummy</span>
@@ -145,7 +258,7 @@
       <p>Everything here is placeholder content. The design uses simple colors: white cards, light gray background, and dark text. No gradients, no glass effects, no AI-generated look.</p>
       <div class="code-block">
         // simple loop<br>
-        setInterval(() => {<br>
+        setInterval(() =&gt; {<br>
         &nbsp;&nbsp;window.scrollBy(0, 1);<br>
         &nbsp;&nbsp;if (atBottom) window.scrollTo(0, 0);<br>
         }, 16);
@@ -156,7 +269,7 @@
       <span class="tag">#plain</span>
     </article>
 
-    <!-- dummy article 2 -->
+    <!-- ============ DUMMY ARTICLE 2 ============ -->
     <article class="article">
       <div class="article-meta">
         <span>Chapter 02 · Example</span>
@@ -169,7 +282,7 @@
       <span class="tag">#dummycontent</span>
     </article>
 
-    <!-- dummy article 3 -->
+    <!-- ============ DUMMY ARTICLE 3 ============ -->
     <article class="article">
       <div class="article-meta">
         <span>Chapter 03 · Notes</span>
@@ -182,14 +295,14 @@
         // pseudo-code<br>
         every 16ms:<br>
         &nbsp;&nbsp;scroll down by 1px<br>
-        &nbsp;&nbsp;if scrollY >= maxScroll:<br>
+        &nbsp;&nbsp;if scrollY &gt;= maxScroll:<br>
         &nbsp;&nbsp;&nbsp;&nbsp;scroll to top
       </div>
       <span class="tag">#loop</span>
       <span class="tag">#technical</span>
     </article>
 
-    <!-- dummy article 4 -->
+    <!-- ============ DUMMY ARTICLE 4 ============ -->
     <article class="article">
       <div class="article-meta">
         <span>Chapter 04 · More</span>
@@ -202,7 +315,7 @@
       <span class="tag">#demo</span>
     </article>
 
-    <!-- dummy article 5 -->
+    <!-- ============ DUMMY ARTICLE 5 ============ -->
     <article class="article">
       <div class="article-meta">
         <span>Chapter 05 · Final</span>
@@ -215,22 +328,54 @@
       <span class="tag">#loop</span>
     </article>
 
-    <!-- tiny footer note (still no controls) -->
     <div class="footer-note">
-      auto scroll loop · no controls · plain ui
+      auto scroll loop · video modal closes after 15 seconds
+    </div>
+  </div>
+
+  <!-- =========================================================
+       VIDEO MODAL
+       - Autoplays muted (required for autoplay on most browsers)
+       - Closes automatically after 15 seconds
+       - Works on mobile and desktop (no ESC needed)
+       ========================================================= -->
+  <div id="videoModal" class="modal-overlay">
+    <div class="modal-content">
+      <div class="video-wrapper">
+        <!--
+          DUMMY VIDEO:
+          Replace the src with any YouTube embed URL.
+          The "autoplay=1&mute=1" is required for autoplay to work.
+          The "loop=1&playlist=..." makes it loop (optional).
+        -->
+        <iframe
+          id="videoFrame"
+          src="https://www.youtube.com/embed/aqz-KE-bpKQ?autoplay=1&mute=1&loop=1&playlist=aqz-KE-bpKQ&controls=1&showinfo=0&rel=0&modestbranding=1"
+          title="Dummy video"
+          allow="autoplay; encrypted-media; picture-in-picture"
+          allowfullscreen>
+        </iframe>
+      </div>
+      <div class="modal-footer">
+        Auto‑playing video (muted) · closes in <span id="countdown">15</span>s
+      </div>
     </div>
   </div>
 
   <script>
     (function() {
-      // Config
+      /* =========================================================
+         1. AUTO SCROLL LOOP
+         - Scrolls the page down continuously
+         - When it reaches the bottom, it jumps to the top
+         - Runs independently of the modal
+         ========================================================= */
       const SCROLL_SPEED = 1.2;        // pixels per tick
-      const TICK_INTERVAL = 16;        // ~60fps (16ms)
-      const BOTTOM_THRESHOLD = 2;      // pixels from bottom to trigger reset
+      const TICK_INTERVAL = 16;        // ~60fps
+      const BOTTOM_THRESHOLD = 2;      // pixels from bottom to reset
 
       let scrollInterval = null;
 
-      // Helper: get max scrollable Y
       function getMaxScroll() {
         return Math.max(
           0,
@@ -238,42 +383,131 @@
         );
       }
 
-      // Scroll down a little, loop if at bottom
       function step() {
         const currentY = window.scrollY;
         const maxY = getMaxScroll();
 
-        // If we're at or near the bottom, jump to top
+        // Loop back to top when reaching bottom
         if (currentY >= maxY - BOTTOM_THRESHOLD) {
           window.scrollTo(0, 0);
         } else {
-          // Otherwise scroll down by a small amount
           window.scrollBy(0, SCROLL_SPEED);
         }
       }
 
-      // Start the auto-scroll loop on mount
       function startAutoScroll() {
         if (scrollInterval) clearInterval(scrollInterval);
         scrollInterval = setInterval(step, TICK_INTERVAL);
       }
 
-      // Kick off when the page loads
+      // Start auto-scroll on load
       window.addEventListener('load', startAutoScroll);
-
-      // Also handle case where load already fired (script placed at end)
       if (document.readyState === 'complete') {
         startAutoScroll();
       } else {
-        // fallback if load hasn't fired yet
         document.addEventListener('DOMContentLoaded', startAutoScroll);
       }
 
-      // Optional: clean up interval if page is unloaded (good practice)
+      // Clean up on unload
       window.addEventListener('beforeunload', function() {
         if (scrollInterval) clearInterval(scrollInterval);
       });
+
+
+      /* =========================================================
+         2. VIDEO MODAL BEHAVIOUR
+         - Modal is visible on page load
+         - Video autoplays (muted)
+         - Modal closes automatically after 15 seconds
+         - No ESC key handling
+         ========================================================= */
+      const MODAL_DURATION = 15;       // seconds before auto-close
+      const modal = document.getElementById('videoModal');
+      const videoFrame = document.getElementById('videoFrame');
+      const countdownEl = document.getElementById('countdown');
+
+      let countdownInterval = null;
+      let autoCloseTimeout = null;
+      let secondsLeft = MODAL_DURATION;
+
+      // Update the countdown text every second
+      function updateCountdown() {
+        if (countdownEl) {
+          countdownEl.textContent = secondsLeft;
+        }
+      }
+
+      // Close the modal (hide + stop video)
+      function closeModal() {
+        if (!modal) return;
+
+        // Hide the modal
+        modal.classList.add('modal-hidden');
+
+        // Stop the video by clearing the iframe src
+        if (videoFrame) {
+          videoFrame.src = 'about:blank';
+        }
+
+        // Clear timers
+        if (countdownInterval) clearInterval(countdownInterval);
+        if (autoCloseTimeout) clearTimeout(autoCloseTimeout);
+      }
+
+      // Start the countdown and auto-close timer
+      function startModalTimer() {
+        // Reset counter
+        secondsLeft = MODAL_DURATION;
+        updateCountdown();
+
+        // Tick every second
+        countdownInterval = setInterval(function() {
+          secondsLeft -= 1;
+          updateCountdown();
+
+          // If we reach 0, close the modal
+          if (secondsLeft <= 0) {
+            clearInterval(countdownInterval);
+            closeModal();
+          }
+        }, 1000);
+
+        // Also set a timeout as a safety net (in case interval drifts)
+        autoCloseTimeout = setTimeout(function() {
+          closeModal();
+        }, MODAL_DURATION * 1000);
+      }
+
+      // Start the modal timer when the page loads
+      window.addEventListener('load', function() {
+        // Make sure modal is visible (it is by default)
+        if (modal) {
+          modal.classList.remove('modal-hidden');
+        }
+        // Start the 15-second countdown
+        startModalTimer();
+      });
+
+      // If the page is already loaded (script at end of body),
+      // start the timer immediately
+      if (document.readyState === 'complete') {
+        if (modal) {
+          modal.classList.remove('modal-hidden');
+        }
+        startModalTimer();
+      } else {
+        document.addEventListener('DOMContentLoaded', function() {
+          if (modal) {
+            modal.classList.remove('modal-hidden');
+          }
+          startModalTimer();
+        });
+      }
+
     })();
   </script>
 </body>
 </html>
+
+
+
